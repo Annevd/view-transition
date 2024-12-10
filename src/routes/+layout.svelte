@@ -31,19 +31,17 @@ onNavigate(async (navigation) => {
     </ul>
 </nav>
 
-<div class="container">
-    <div class="page-transition right"></div>
-    <div class="page-transition right"></div>
-    <div class="page-transition right"></div>
-    <div class="page-transition right"></div>
-    <div class="page-transition right"></div>
+<div class="page-transition right"></div>
+<div class="page-transition right"></div>
+<div class="page-transition right"></div>
+<div class="page-transition right"></div>
+<div class="page-transition right"></div>
 
-    <div class="page-transition left"></div>
-    <div class="page-transition left"></div>
-    <div class="page-transition left"></div>
-    <div class="page-transition left"></div>
-    <div class="page-transition left"></div>
-</div>
+<div class="page-transition left"></div>
+<div class="page-transition left"></div>
+<div class="page-transition left"></div>
+<div class="page-transition left"></div>
+<div class="page-transition left"></div>
 
 <slot></slot>
 
@@ -53,15 +51,6 @@ onNavigate(async (navigation) => {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-nav {
-    view-transition-name: header; /* De view transition gebeurd nu niet op de nav */
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
 }
 
 .page-transition {
@@ -115,29 +104,31 @@ nav {
     view-transition-name: row-5-right;
 }
 
-:root::view-transition-group(row-1-right) {
-    animation: translateInFromRight 2s ease-in-out 0.4s;
-    top: 0;
-}
+@media (prefers-reduced-motion: no-preference) {
+    :root::view-transition-group(row-1-right) {
+        animation: translateInFromRight 2s ease-in-out 0.4s;
+        top: 0;
+    }
 
-:root::view-transition-group(row-2-right) {
-    animation: translateInFromRight 2s ease-in-out 0.3s;
-    top: 10lvh;
-}
+    :root::view-transition-group(row-2-right) {
+        animation: translateInFromRight 2s ease-in-out 0.3s;
+        top: 10lvh;
+    }
 
-:root::view-transition-group(row-3-right) {
-    animation: translateInFromRight 2s ease-in-out 0.2s;
-    top: 20lvh;
-}
+    :root::view-transition-group(row-3-right) {
+        animation: translateInFromRight 2s ease-in-out 0.2s;
+        top: 20lvh;
+    }
 
-:root::view-transition-group(row-4-right) {
-    animation: translateInFromRight 2s ease-in-out 0.1s;
-    top: 30lvh;
-}
+    :root::view-transition-group(row-4-right) {
+        animation: translateInFromRight 2s ease-in-out 0.1s;
+        top: 30lvh;
+    }
 
-:root::view-transition-group(row-5-right) {
-    animation: translateInFromRight 2s ease-in-out;
-    top: 40lvh;
+    :root::view-transition-group(row-5-right) {
+        animation: translateInFromRight 2s ease-in-out;
+        top: 40lvh;
+    }
 }
 
 /* Lines left to right */
@@ -172,29 +163,31 @@ nav {
     view-transition-name: row-5-left;
 }
 
-:root::view-transition-group(row-1-left) {
-    animation: translateInFromLeft 2s ease-in-out;
-    top: 50lvh;
-}
+@media (prefers-reduced-motion: no-preference) {
+    :root::view-transition-group(row-1-left) {
+        animation: translateInFromLeft 2s ease-in-out;
+        top: 50lvh;
+    }
 
-:root::view-transition-group(row-2-left) {
-    animation: translateInFromLeft 2s ease-in-out 0.1s;
-    top: 60lvh;
-}
+    :root::view-transition-group(row-2-left) {
+        animation: translateInFromLeft 2s ease-in-out 0.1s;
+        top: 60lvh;
+    }
 
-:root::view-transition-group(row-3-left) {
-    animation: translateInFromLeft 2s ease-in-out 0.2s;
-    top: 70lvh;
-}
+    :root::view-transition-group(row-3-left) {
+        animation: translateInFromLeft 2s ease-in-out 0.2s;
+        top: 70lvh;
+    }
 
-:root::view-transition-group(row-4-left) {
-    animation: translateInFromLeft 2s ease-in-out 0.3s;
-    top: 80lvh;
-}
+    :root::view-transition-group(row-4-left) {
+        animation: translateInFromLeft 2s ease-in-out 0.3s;
+        top: 80lvh;
+    }
 
-:root::view-transition-group(row-5-left) {
-    animation: translateInFromLeft 2s ease-in-out 0.4s;
-    top: 90lvh;
+    :root::view-transition-group(row-5-left) {
+        animation: translateInFromLeft 2s ease-in-out 0.4s;
+        top: 90lvh;
+    }
 }
 
 /* Keyframes */
@@ -232,15 +225,5 @@ nav {
      transform: translateX(100%); 
   }
 }
-
-/* :root::view-transition-group(page-transition) {
-  animation: translateInFromLeft 2s ease-in;
-  top: 0;
-}
-
-:root::view-transition-group(page-transition-2) {
-  animation: translateInFromRight 2s ease-in;
-  top: 50lvh;
-} */
 
 </style>
