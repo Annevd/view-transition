@@ -1,16 +1,26 @@
 <script>
-    import { onNavigate } from '$app/navigation';
 
-onNavigate((navigation) => {
-	if (!document.startViewTransition) return;
+import { onNavigate } from '$app/navigation';
 
-	return new Promise((resolve) => {
-		document.startViewTransition(async () => {
-			resolve();
-			await navigation.complete;
-		});
-	});
+function delayNavigation() {
+    return new Promise((resolve) => setTimeout(resolve, 100));
+}
+
+onNavigate(async (navigation) => {
+    if (!document.startViewTransition) {
+        await delayNavigation();
+        return;
+    }
+
+    return new Promise((resolve) => {
+        document.startViewTransition(async () => {
+        await delayNavigation();
+        resolve();
+        await navigation.complete;
+        });
+    });
 });
+
 </script>
 
 <nav>
@@ -21,47 +31,216 @@ onNavigate((navigation) => {
     </ul>
 </nav>
 
+<div class="container">
+    <div class="page-transition right"></div>
+    <div class="page-transition right"></div>
+    <div class="page-transition right"></div>
+    <div class="page-transition right"></div>
+    <div class="page-transition right"></div>
+
+    <div class="page-transition left"></div>
+    <div class="page-transition left"></div>
+    <div class="page-transition left"></div>
+    <div class="page-transition left"></div>
+    <div class="page-transition left"></div>
+</div>
+
 <slot></slot>
 
 <style>
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 nav {
-    view-transition-name: header; /* De view transition gebeud nu niet op de nav */
+    view-transition-name: header; /* De view transition gebeurd nu niet op de nav */
 }
 
-@keyframes fade-in {
-	from {
-		opacity: 0;
-	}
+.container {
+    display: flex;
+    flex-direction: column;
 }
 
-@keyframes fade-out {
-	to {
-		opacity: 0;
-	}
+.page-transition {
+  position: fixed;
+  width: 100%;
+  height: 10lvh;
+  pointer-events: none;
 }
 
-@keyframes slide-from-right {
-	from {
-		transform: translateX(30px);
-	}
+.page-transition.right {
+    left: 0;
+    transform: translateX(-100%);
+    border-radius: 5rem 0 0 5rem;
 }
 
-@keyframes slide-to-left {
-	to {
-		transform: translateX(-30px);
-	}
+.page-transition.left {
+    right: 0;
+    transform: translateX(100%);
+    border-radius: 0 5rem 5rem 0;
 }
 
-:root::view-transition-old(root) {
-	animation:
-		90ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
-		300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
+/* Lines right to left */
+
+.page-transition.right:first-of-type {
+    top: 0;
+    background: #ED9E35;
+    view-transition-name: row-1-right;
 }
 
-:root::view-transition-new(root) {
-	animation:
-		210ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
-		300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+.page-transition.right:nth-of-type(2) {
+    top: 10lvh;
+    background: #DB7027;
+    view-transition-name: row-2-right;
 }
+
+.page-transition.right:nth-of-type(3) {
+    top: 20lvh;
+    background: #563B2A;
+    view-transition-name: row-3-right;
+}
+
+.page-transition.right:nth-of-type(4) {
+    top: 30lvh;
+    background: #72C2A9;
+    view-transition-name: row-4-right;
+}
+
+.page-transition.right:nth-of-type(5) {
+    top: 40lvh;
+    background: #FEE7BD;
+    view-transition-name: row-5-right;
+}
+
+:root::view-transition-group(row-1-right) {
+    animation: translateInFromRight 2s ease-in-out 0.4s;
+    top: 0;
+}
+
+:root::view-transition-group(row-2-right) {
+    animation: translateInFromRight 2s ease-in-out 0.3s;
+    top: 10lvh;
+}
+
+:root::view-transition-group(row-3-right) {
+    animation: translateInFromRight 2s ease-in-out 0.2s;
+    top: 20lvh;
+}
+
+:root::view-transition-group(row-4-right) {
+    animation: translateInFromRight 2s ease-in-out 0.1s;
+    top: 30lvh;
+}
+
+:root::view-transition-group(row-5-right) {
+    animation: translateInFromRight 2s ease-in-out;
+    top: 40lvh;
+}
+
+/* Lines left to right */
+
+.page-transition.left:nth-of-type(6) {
+    top: 50lvh;
+    background: #FEE7BD;
+    view-transition-name: row-1-left;
+}
+
+.page-transition.left:nth-of-type(7) {
+    top: 60lvh;
+    background: #72C2A9;
+    view-transition-name: row-2-left;
+}
+
+.page-transition.left:nth-of-type(8) {
+    top: 70lvh;
+    background: #563B2A;
+    view-transition-name: row-3-left;
+}
+
+.page-transition.left:nth-of-type(9) {
+    top: 80lvh;
+    background: #DB7027;
+    view-transition-name: row-4-left;
+}
+
+.page-transition.left:nth-of-type(10) {
+    top: 90lvh;
+    background: #ED9E35;
+    view-transition-name: row-5-left;
+}
+
+:root::view-transition-group(row-1-left) {
+    animation: translateInFromLeft 2s ease-in-out;
+    top: 50lvh;
+}
+
+:root::view-transition-group(row-2-left) {
+    animation: translateInFromLeft 2s ease-in-out 0.1s;
+    top: 60lvh;
+}
+
+:root::view-transition-group(row-3-left) {
+    animation: translateInFromLeft 2s ease-in-out 0.2s;
+    top: 70lvh;
+}
+
+:root::view-transition-group(row-4-left) {
+    animation: translateInFromLeft 2s ease-in-out 0.3s;
+    top: 80lvh;
+}
+
+:root::view-transition-group(row-5-left) {
+    animation: translateInFromLeft 2s ease-in-out 0.4s;
+    top: 90lvh;
+}
+
+/* Keyframes */
+
+@keyframes translateInFromLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(0);
+    width: 110%;
+  }
+  70% {
+    transform: translateX(0);
+    width: 110%;
+  }
+  100% {
+     transform: translateX(-100%); 
+  }
+}
+
+@keyframes translateInFromRight {
+  0% {
+    transform: translateX(100%);
+  }
+  50% {
+    transform: translateX(-10%);
+    width: 110%;
+  }
+  80% {
+    transform: translateX(-10%);
+    width: 110%;
+  }
+  100% {
+     transform: translateX(100%); 
+  }
+}
+
+/* :root::view-transition-group(page-transition) {
+  animation: translateInFromLeft 2s ease-in;
+  top: 0;
+}
+
+:root::view-transition-group(page-transition-2) {
+  animation: translateInFromRight 2s ease-in;
+  top: 50lvh;
+} */
+
 </style>
