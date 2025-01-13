@@ -23,6 +23,7 @@ onNavigate(async (navigation) => {
 
 </script>
 
+<!-- test -->
 <nav>
     <ul>
         <li><a href="/">Home</a></li>
