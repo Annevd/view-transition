@@ -23,7 +23,8 @@ onNavigate(async (navigation) => {
 
 </script>
 
-<!-- test -->
+<!-- GIT commit demo -->
+ 
 <nav>
     <ul>
         <li><a href="/">Home</a></li>
